@@ -1,0 +1,34 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "render", function () {
+  return render;
+});
+var _utils = require('./utils');
+const setAttrs = (target, attrs) => {
+  for (const attr in attrs) {
+    if (_utils.isEventAttr(attr)) {
+      target.addEventListener(attr.slice(2), attrs[attr]);
+    } else {
+      target.setAttribute(attr, attrs[attr]);
+    }
+  }
+};
+function renderElement({tagName, attrs, children}) {
+  const $el = document.createElement(tagName);
+  for (const [k, v] of Object.entries(attrs)) {
+    // リアル DOM 要素 $elに class や id、type などの属性を付与
+    $el.setAttribute(k, v);
+  }
+  for (const child of children) {
+    // children 要素があるならば一つ一つを要素 $el に appendChildする
+    $el.appendChild(render(child));
+  }
+  return $el;
+}
+function render(vNode) {
+  if (typeof vNode === "string") {
+    // 渡された要素が文字列かどうか
+    return document.createTextNode(vNode);
+  }
+  return renderElement(vNode);
+}

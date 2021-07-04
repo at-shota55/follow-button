@@ -1,0 +1,8 @@
+var _vdomCreateElement = require('./vdom/createElement');
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+var _vdomCreateElementDefault = _parcelHelpers.interopDefault(_vdomCreateElement);
+require('./vdom/render');
+const view = _vdomCreateElementDefault.default("p", {
+  attrs: {},
+  children: ["仮想DOMの学習スタート！"]
+});
